@@ -1,0 +1,116 @@
+{
+  "Nav": {
+    "services": "Services",
+    "skills": "Skills",
+    "projects": "Projects",
+    "about": "About",
+    "contact": "Contact",
+    "cta": "Start a project"
+  },
+  "LocaleSwitcher": {
+    "label": "Change language",
+    "locale": "{locale, select, fr {🇫🇷 French} en {🇺🇸 English} other {Unknown}}"
+  },
+  "Navigation": {
+    "home": "Home",
+    "pathnames": "Pathnames"
+  },
+  "PageLayout": {
+    "links": {
+      "docs": {
+        "title": "Documentation",
+        "description": "How routing and translations work in this project.",
+        "href": "/docs"
+      },
+      "source": {
+        "title": "Source code",
+        "description": "Browse the repository and implementation details.",
+        "href": "https://github.com/your/repo"
+      }
+    }
+  },
+  "Hero": {
+    "role": "Web2 & Web3 Engineering — Freelance",
+    "title": {
+      "part1": "Products that",
+      "part2": "perform",
+      "part3": "& interfaces that",
+      "part4": "convert"
+    },
+    "subtitle": "I design, build and ship ambitious apps—from Solana dApps to scalable Web2 platforms. Goal: measurable business impact, short time-to-market, premium quality.",
+    "cta1": "Discuss a mission",
+    "cta2": "View my projects",
+    "badge1": "Tested & documented deliverables",
+    "badge2": "Reusable design system",
+    "available": "Available for hire"
+  },
+  "Services": {
+    "kicker": "What I do",
+    "title": "Tailored services",
+    "cards": {
+      "web3": {
+        "title": "Web3 – Solana dApps",
+        "p1": "Anchor, Token-2022, Bubblegum cNFTs",
+        "p2": "Wallet Adapter, SMS-ready",
+        "p3": "Security (PDA, CPI), monitoring"
+      },
+      "web2": {
+        "title": "Web2 – Scalable apps",
+        "p1": "Java/Spring, Jakarta EE, Angular",
+        "p2": "Next.js 15, Node/Express",
+        "p3": "Prisma + Supabase, Perf & SEO"
+      },
+      "ds": {
+        "title": "Design System & Integration",
+        "p1": "Tailwind + shadcn/ui",
+        "p2": "Design system & reusable components",
+        "p3": "Clean, converting UX"
+      }
+    }
+  },
+  "Skills": {
+    "kicker": "Stack",
+    "title": "Skills"
+  },
+  "Projects": {
+    "kicker": "Portfolio",
+    "title": "Featured projects",
+    "aivy": {
+      "summary": "Scalable AI agents on Solana — cNFTs, Token-2022, Solana Agent Kit. Built-in fuel, unified tx."
+    },
+    "metaflow": {
+      "summary": "On-chain subscriptions & paid content. Access, expirations, dynamic commissions — USDC SPL."
+    },
+    "sunsaver": {
+      "summary": "Private beach spot booking in Italy — real-time planning, payments and confirmations."
+    },
+    "note": "Each project ships with a clean repo, install guide and key tests."
+  },
+  "About": {
+    "kicker": "Who delivers",
+    "title": "About",
+    "p1": "ToZeMoon Labs is my studio—I personally handle architecture, development and quality.",
+    "p2": "From scoping to deployment, with fast iterations and tested deliverables.",
+    "modes": {
+      "title": "Engagement modes",
+      "m1": "Fixed-scope deliverable",
+      "m2": "Time & material",
+      "m3": "Support & maintenance"
+    }
+  },
+  "Contact": {
+    "kicker": "Contact",
+    "title": "Let’s talk about your project",
+    "p1": "Need to accelerate a roadmap or turn a PoC into a product? Short or long missions, fixed price or T&M.",
+    "li1": "Timezone: Europe/Paris — remote or hybrid",
+    "li2": "Fast onboarding, clear communication",
+    "li3": "Rate adapted to scope & urgency",
+    "form": {
+      "name": "Name / Company",
+      "email": "Email",
+      "message": "Your needs in a few lines",
+      "submit": "Send",
+      "note": "Your data is only used to reply."
+    }
+  }
+}

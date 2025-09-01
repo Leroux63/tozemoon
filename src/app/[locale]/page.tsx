@@ -1,0 +1,217 @@
+// app/[locale]/page.tsx
+import { ArrowRight, Blocks, Code2, Wrench } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Container } from '@/components/Container';
+import { Section } from '@/components/Section';
+import { ProjectCard } from '@/components/ProjectCard';
+import { SkillPills } from '@/components/SkillPills';
+import { web2Skills, web3Skills } from '@/lib/skills';
+import TMLogo from '@/components/TMLogo';
+import PageLayout from '@/components/PageLayout';
+
+import type { Locale } from 'next-intl';
+import { setRequestLocale, getTranslations } from 'next-intl/server';
+
+type Props = { params: Promise<{ locale: Locale }> };
+
+export default async function IndexPage({ params }: Props) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+
+  const t = await getTranslations();
+
+  return (
+    <PageLayout>
+      <div>
+        {/* HERO */}
+        <section className="pb-10">
+          <Container className="grid md:grid-cols-2 gap-10">
+            <div>
+              <div className="inline-flex items-center gap-2 text-xs px-3 py-1 rounded-full bg-white/10 text-[#66D1D8]">
+                {t('Hero.role')}
+              </div>
+              <h1 className="mt-4 text-4xl md:text-6xl font-bold leading-tight">
+                {t('Hero.title.part1')}{' '}
+                <span className="text-[var(--lunar)]">{t('Hero.title.part2')}</span>{' '}
+                {t('Hero.title.part3')}{' '}
+                <span style={{ color: 'var(--orange)' }}>{t('Hero.title.part4')}</span>.
+              </h1>
+              <p className="mt-4 text-base md:text-lg opacity-90">{t('Hero.subtitle')}</p>
+              <div className="mt-6 flex flex-wrap gap-3">
+                <Button className="rounded-2xl" asChild>
+                  <a href="#contact">
+                    {t('Hero.cta1')} <ArrowRight className="ml-2 h-4 w-4" />
+                  </a>
+                </Button>
+                <Button className="rounded-2xl" variant="outline" asChild>
+                  <a href="#projects">{t('Hero.cta2')}</a>
+                </Button>
+              </div>
+              <div className="mt-6 flex items-center gap-6 text-sm opacity-80">
+                <div className="flex items-center gap-2">
+                  <span>{t('Hero.badge1')}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span>{t('Hero.badge2')}</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex items-center justify-center">
+              <div className="relative w-full max-w-md aspect-square bg-white/5 rounded-3xl shadow-lg p-8">
+                <div className="h-full flex items-center justify-center">
+                  <TMLogo className="h-20 w-20" />
+                </div>
+                <div className="absolute -bottom-4 -right-4 px-3 py-1 rounded-full text-xs bg-[var(--lunar)] text-black">
+                  {t('Hero.available')}
+                </div>
+              </div>
+            </div>
+          </Container>
+        </section>
+
+        {/* SERVICES */}
+        <Container>
+          <Section id="services" title={t('Services.title')} kicker={t('Services.kicker')}>
+            <div className="grid md:grid-cols-3 gap-6">
+              {[
+                {
+                  icon: <Blocks className="h-5 w-5" />,
+                  title: t('Services.cards.web3.title'),
+                  points: [t('Services.cards.web3.p1'), t('Services.cards.web3.p2'), t('Services.cards.web3.p3')],
+                },
+                {
+                  icon: <Code2 className="h-5 w-5" />,
+                  title: t('Services.cards.web2.title'),
+                  points: [t('Services.cards.web2.p1'), t('Services.cards.web2.p2'), t('Services.cards.web2.p3')],
+                },
+                {
+                  icon: <Wrench className="h-5 w-5" />,
+                  title: t('Services.cards.ds.title'),
+                  points: [t('Services.cards.ds.p1'), t('Services.cards.ds.p2'), t('Services.cards.ds.p3')],
+                },
+              ].map((s, i) => (
+                <div key={i} className="bg-white/[0.06] rounded-2xl border border-white/10">
+                  <div className="p-5">
+                    <div className="flex items-center gap-3">
+                      <div className="p-2 rounded-xl bg-cyan-400/10">{s.icon}</div>
+                      <div className="text-white font-semibold">{s.title}</div>
+                    </div>
+                    <ul className="mt-3 space-y-2 opacity-90 text-sm">
+                      {s.points.map((p, idx) => (
+                        <li key={idx}>• {p}</li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </Section>
+        </Container>
+
+        {/* SKILLS */}
+        <Container>
+          <Section id="skills" title={t('Skills.title')} kicker={t('Skills.kicker')}>
+            <div className="grid md:grid-cols-2 gap-6">
+              <SkillPills title="Web3" items={web3Skills} />
+              <SkillPills title="Web2" items={web2Skills} />
+            </div>
+          </Section>
+        </Container>
+
+        {/* PROJECTS */}
+        <Container>
+          <Section id="projects" title={t('Projects.title')} kicker={t('Projects.kicker')}>
+            <div className="grid md:grid-cols-3 gap-6">
+              <ProjectCard
+                name="Aivy (Web3)"
+                summary={t('Projects.aivy.summary')}
+                tags={['Solana', 'Anchor', 'Agent Kit']}
+                hrefCase="/projects/aivy"
+              />
+              <ProjectCard
+                name="MetaFlow (Web3)"
+                summary={t('Projects.metaflow.summary')}
+                tags={['Token', 'Paywalls', 'USDC']}
+                hrefCase="/projects/metaflow"
+              />
+              <ProjectCard
+                name="SunSaver (Web2)"
+                summary={t('Projects.sunsaver.summary')}
+                tags={['Next.js', 'Prisma', 'Stripe/Pay']}
+                hrefCase="/projects/sunsaver"
+              />
+            </div>
+            <p className="mt-6 text-sm opacity-75">{t('Projects.note')}</p>
+          </Section>
+        </Container>
+
+        {/* ABOUT */}
+        <Container>
+          <Section id="about" title={t('About.title')} kicker={t('About.kicker')}>
+            <div className="grid md:grid-cols-3 gap-8">
+              <div className="md:col-span-2 space-y-3 opacity-90">
+                <p>{t('About.p1')}</p>
+                <p>{t('About.p2')}</p>
+              </div>
+              <div className="bg-white/5 rounded-2xl p-4">
+                <div className="text-sm font-medium mb-2">{t('About.modes.title')}</div>
+                <ul className="text-sm opacity-90 space-y-1">
+                  <li>• {t('About.modes.m1')}</li>
+                  <li>• {t('About.modes.m2')}</li>
+                  <li>• {t('About.modes.m3')}</li>
+                </ul>
+              </div>
+            </div>
+          </Section>
+        </Container>
+
+        {/* CONTACT */}
+        <Container>
+          <Section id="contact" title={t('Contact.title')} kicker={t('Contact.kicker')}>
+            <div className="grid md:grid-cols-2 gap-8 items-center">
+              <div className="space-y-4">
+                <p className="opacity-90">{t('Contact.p1')}</p>
+                <ul className="list-disc ml-5 opacity-90">
+                  <li>{t('Contact.li1')}</li>
+                  <li>{t('Contact.li2')}</li>
+                  <li>{t('Contact.li3')}</li>
+                </ul>
+              </div>
+              <div className="bg-white/5 rounded-2xl p-6">
+                <form className="grid grid-cols-1 gap-3 text-sm" action="/api/contact" method="post">
+                  {/* Honeypot anti-spam */}
+                  <input type="text" name="_company" className="hidden" tabIndex={-1} autoComplete="off" />
+                  <input
+                    className="bg-transparent border rounded-xl px-3 py-2 border-white/20"
+                    placeholder={t('Contact.form.name')}
+                    name="name"
+                    required
+                  />
+                  <input
+                    className="bg-transparent border rounded-xl px-3 py-2 border-white/20"
+                    placeholder={t('Contact.form.email')}
+                    name="email"
+                    type="email"
+                    required
+                  />
+                  <textarea
+                    rows={4}
+                    className="bg-transparent border rounded-xl px-3 py-2 border-white/20"
+                    placeholder={t('Contact.form.message')}
+                    name="message"
+                    required
+                  />
+                  <Button type="submit" className="rounded-2xl" style={{ backgroundColor: 'var(--orange)', color: 'black' }}>
+                    {t('Contact.form.submit')}
+                  </Button>
+                </form>
+                <p className="mt-2 text-xs opacity-60">{t('Contact.form.note')}</p>
+              </div>
+            </div>
+          </Section>
+        </Container>
+      </div>
+    </PageLayout>
+  );
+}
