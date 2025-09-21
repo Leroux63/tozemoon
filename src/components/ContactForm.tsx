@@ -1,19 +1,40 @@
 'use client';
 
-import { useRef, useState } from 'react';
-import HCaptcha from '@hcaptcha/react-hcaptcha';
+import { useCallback, useRef, useState } from 'react';
+import dynamic from 'next/dynamic';
 import { Button } from '@/components/ui/button';
 import { useTranslations } from 'next-intl';
+
+// Charge uniquement côté client (pas de SSR)
+const HCaptcha = dynamic(() => import('@hcaptcha/react-hcaptcha'), { ssr: false });
 
 export default function ContactForm() {
   const t = useTranslations('Contact.form');
 
-  const [captchaToken, setCaptchaToken] = useState<string>('');
+  const [captchaToken, setCaptchaToken] = useState('');
+  const [captchaKey, setCaptchaKey] = useState(0); // ← sert à "reset" le widget
   const [loading, setLoading] = useState(false);
   const [toast, setToast] = useState<{ type: 'success' | 'error'; msg: string } | null>(null);
 
   const formRef = useRef<HTMLFormElement>(null);
-  const captchaRef = useRef<HCaptcha>(null);
+
+  const hardResetCaptcha = useCallback(() => {
+    setCaptchaToken('');
+    setCaptchaKey((k) => k + 1); // ← remonte un nouveau composant => reset
+  }, []);
+
+  const handleVerify = useCallback((token: string) => {
+    setCaptchaToken(token);
+  }, []);
+
+  const handleExpire = useCallback(() => {
+    setCaptchaToken('');
+  }, []);
+
+  const handleError = useCallback(() => {
+    setToast({ type: 'error', msg: t('toast.network') });
+    hardResetCaptcha();
+  }, [hardResetCaptcha, t]);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -39,7 +60,6 @@ export default function ContactForm() {
 
     try {
       setLoading(true);
-
       const res = await fetch('/api/contact', { method: 'POST', body: formData });
       const data = await res.json();
 
@@ -54,15 +74,13 @@ export default function ContactForm() {
             err === 'captcha_error'  ? t('toast.network')  :
                                        t('toast.generic')
         });
-        captchaRef.current?.resetCaptcha();
-        setCaptchaToken('');
+        hardResetCaptcha();
         return;
       }
 
       setToast({ type: 'success', msg: t('toast.success') });
       formRef.current?.reset();
-      captchaRef.current?.resetCaptcha();
-      setCaptchaToken('');
+      hardResetCaptcha();
     } catch {
       setToast({ type: 'error', msg: t('toast.network') });
     } finally {
@@ -72,7 +90,6 @@ export default function ContactForm() {
 
   return (
     <div className="relative">
-      {/* TOAST CENTRÉ */}
       {toast && (
         <div className="flex justify-center mb-3">
           <div
@@ -90,16 +107,14 @@ export default function ContactForm() {
       )}
 
       <form ref={formRef} onSubmit={handleSubmit} className="grid grid-cols-1 gap-4 text-sm" noValidate>
-        {/* Honeypot */}
         <input type="text" name="_company" className="hidden" tabIndex={-1} autoComplete="off" />
 
-        {/* NAME — floating label */}
         <div className="relative">
           <input
             id="contact-name"
             name="name"
             type="text"
-            placeholder=" "                     // important pour le floating
+            placeholder=" "
             className="peer bg-transparent border rounded-xl px-3 pt-5 pb-2 border-white/20 w-full
                        focus:border-[var(--orange)] focus:ring-2 focus:ring-[var(--orange)]/30 outline-none"
             required
@@ -107,8 +122,7 @@ export default function ContactForm() {
           <label
             htmlFor="contact-name"
             className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2
-                       px-1 text-sm text-gray-400 bg-white/5
-                       transition-all duration-150
+                       px-1 text-sm text-gray-400 bg-white/5 transition-all duration-150
                        peer-focus:top-2 peer-focus:text-xs
                        peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm
                        peer-not-placeholder-shown:top-2 peer-not-placeholder-shown:text-xs"
@@ -117,7 +131,6 @@ export default function ContactForm() {
           </label>
         </div>
 
-        {/* EMAIL — floating label */}
         <div className="relative">
           <input
             id="contact-email"
@@ -131,8 +144,7 @@ export default function ContactForm() {
           <label
             htmlFor="contact-email"
             className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2
-                       px-1 text-sm text-gray-400 bg-white/5
-                       transition-all duration-150
+                       px-1 text-sm text-gray-400 bg-white/5 transition-all duration-150
                        peer-focus:top-2 peer-focus:text-xs
                        peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm
                        peer-not-placeholder-shown:top-2 peer-not-placeholder-shown:text-xs"
@@ -141,7 +153,6 @@ export default function ContactForm() {
           </label>
         </div>
 
-        {/* MESSAGE — floating label */}
         <div className="relative">
           <textarea
             id="contact-message"
@@ -155,8 +166,7 @@ export default function ContactForm() {
           <label
             htmlFor="contact-message"
             className="pointer-events-none absolute left-3 top-3
-                       px-1 text-sm text-gray-400 bg-white/5
-                       transition-all duration-150
+                       px-1 text-sm text-gray-400 bg-white/5 transition-all duration-150
                        peer-focus:top-2 peer-focus:text-xs
                        peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:text-sm
                        peer-not-placeholder-shown:top-2 peer-not-placeholder-shown:text-xs"
@@ -165,17 +175,18 @@ export default function ContactForm() {
           </label>
         </div>
 
-        {/* hCaptcha */}
+        {/* hCaptcha (sans ref) */}
         <div className="mt-1">
           <HCaptcha
-            ref={captchaRef}
+            key={captchaKey}
             sitekey={process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY!}
-            onVerify={(token) => setCaptchaToken(token)}
+            onVerify={handleVerify}
+            onExpire={handleExpire}
+            onError={handleError}
             theme="dark"
           />
         </div>
 
-        {/* CTA */}
         <Button
           type="submit"
           disabled={loading}
