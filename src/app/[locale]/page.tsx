@@ -6,12 +6,13 @@ import { Section } from '@/components/Section';
 import { ProjectCard } from '@/components/ProjectCard';
 import { SkillPills } from '@/components/SkillPills';
 import { web2Skills, web3Skills } from '@/lib/skills';
-import TMLogo from '@/components/TMLogo';
 import PageLayout from '@/components/PageLayout';
-
+import { LIVE_URLS } from '@/lib/links';
+import ContactForm from '@/components/ContactForm';
+import dynamic from 'next/dynamic';
 import type { Locale } from 'next-intl';
 import { setRequestLocale, getTranslations } from 'next-intl/server';
-
+import Hero3DClient from '@/components/hero/Hero3DClient';
 type Props = { params: Promise<{ locale: Locale }> };
 
 export default async function IndexPage({ params }: Props) {
@@ -58,13 +59,8 @@ export default async function IndexPage({ params }: Props) {
             </div>
 
             <div className="flex items-center justify-center">
-              <div className="relative w-full max-w-md aspect-square bg-white/5 rounded-3xl shadow-lg p-8">
-                <div className="h-full flex items-center justify-center">
-                  <TMLogo className="h-20 w-20" />
-                </div>
-                <div className="absolute -bottom-4 -right-4 px-3 py-1 rounded-full text-xs bg-[var(--lunar)] text-black">
-                  {t('Hero.available')}
-                </div>
+              <div className="relative w-full max-w-2xl aspect-[16/9] rounded-3xl overflow-hidden border border-white/10 shadow-xl">
+                <Hero3DClient />
               </div>
             </div>
           </Container>
@@ -127,19 +123,20 @@ export default async function IndexPage({ params }: Props) {
                 name="Aivy (Web3)"
                 summary={t('Projects.aivy.summary')}
                 tags={['Solana', 'Anchor', 'Agent Kit']}
-                hrefCase="/projects/aivy"
+                slug="aivy"
+                hrefLive={LIVE_URLS.aivy}
               />
               <ProjectCard
                 name="MetaFlow (Web3)"
                 summary={t('Projects.metaflow.summary')}
                 tags={['Token', 'Paywalls', 'USDC']}
-                hrefCase="/projects/metaflow"
+                slug="metaflow"
               />
               <ProjectCard
                 name="SunSaver (Web2)"
                 summary={t('Projects.sunsaver.summary')}
                 tags={['Next.js', 'Prisma', 'Stripe/Pay']}
-                hrefCase="/projects/sunsaver"
+                slug="sunsaver"
               />
             </div>
             <p className="mt-6 text-sm opacity-75">{t('Projects.note')}</p>
@@ -178,39 +175,14 @@ export default async function IndexPage({ params }: Props) {
                   <li>{t('Contact.li3')}</li>
                 </ul>
               </div>
+
               <div className="bg-white/5 rounded-2xl p-6">
-                <form className="grid grid-cols-1 gap-3 text-sm" action="/api/contact" method="post">
-                  {/* Honeypot anti-spam */}
-                  <input type="text" name="_company" className="hidden" tabIndex={-1} autoComplete="off" />
-                  <input
-                    className="bg-transparent border rounded-xl px-3 py-2 border-white/20"
-                    placeholder={t('Contact.form.name')}
-                    name="name"
-                    required
-                  />
-                  <input
-                    className="bg-transparent border rounded-xl px-3 py-2 border-white/20"
-                    placeholder={t('Contact.form.email')}
-                    name="email"
-                    type="email"
-                    required
-                  />
-                  <textarea
-                    rows={4}
-                    className="bg-transparent border rounded-xl px-3 py-2 border-white/20"
-                    placeholder={t('Contact.form.message')}
-                    name="message"
-                    required
-                  />
-                  <Button type="submit" className="rounded-2xl" style={{ backgroundColor: 'var(--orange)', color: 'black' }}>
-                    {t('Contact.form.submit')}
-                  </Button>
-                </form>
-                <p className="mt-2 text-xs opacity-60">{t('Contact.form.note')}</p>
+                <ContactForm />
               </div>
             </div>
           </Section>
         </Container>
+
       </div>
     </PageLayout>
   );

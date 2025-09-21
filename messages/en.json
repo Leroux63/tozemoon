@@ -15,6 +15,9 @@
     "home": "Home",
     "pathnames": "Pathnames"
   },
+  "Common": {
+    "backHome": "Back to home"
+  },
   "PageLayout": {
     "links": {
       "docs": {
@@ -43,6 +46,17 @@
     "badge1": "Tested & documented deliverables",
     "badge2": "Reusable design system",
     "available": "Available for hire"
+  },
+   "Hero3D": {
+    "play": "Play",
+    "pause": "Pause",
+    "steps": {
+      "plan":  { "chip": "Plan",  "title": "Blueprints", "desc": "Scope, KPIs, risks — we draft the flight plan." },
+      "build": { "chip": "Build", "title": "Construction", "desc": "Smart contracts / backend / UI — components take shape." },
+      "stack": { "chip": "Stack", "title": "Integration", "desc": "Testing, security checks, observability — ready on the pad." },
+      "launch":{ "chip": "Launch","title": "Liftoff", "desc": "Go-live, progressive rollout, telemetry on." },
+      "orbit": { "chip": "Orbit", "title": "To the Moon", "desc": "Scale, optimize costs, add modules — steady trajectory." }
+    }
   },
   "Services": {
     "kicker": "What I do",
@@ -75,6 +89,12 @@
   "Projects": {
     "kicker": "Portfolio",
     "title": "Featured projects",
+    "card": {
+      "case": "Case study",
+      "live": "View live",
+      "caseAria": "Open case study: {name}",
+      "liveAria": "Open live site for {name}"
+    },
     "aivy": {
       "summary": "Scalable AI agents on Solana — cNFTs, Token-2022, Solana Agent Kit. Built-in fuel, unified tx."
     },
@@ -110,7 +130,60 @@
       "email": "Email",
       "message": "Your needs in a few lines",
       "submit": "Send",
-      "note": "Your data is only used to reply."
+      "note": "Your data is only used to reply.",
+      "sending": "Sending…",
+      "toast": {
+        "success": "Message sent. Thank you!",
+        "captcha": "Please complete the CAPTCHA.",
+        "email": "Invalid email address.",
+        "required": "Please fill in all fields.",
+        "network": "Network error. Please try again.",
+        "generic": "Unable to send right now."
+      }
+    }
+  },
+  "Cases": {
+    "Aivy": {
+      "title": "Aivy — Scalable AI agents on Solana",
+      "intro": "Personified AI agents (cNFT) with fuel, upgrades and Solana Agent Kit integration.",
+      "cta": "Discuss your use case",
+      "gallery": {
+        "cover": "Aivy overview",
+        "deploy": "Deploy cNFT collection",
+        "solscan": "Solscan confirmation"
+      },
+      "stats": {
+        "ttf": {
+          "label": "Time-to-first-value",
+          "value": "≤ 1 day",
+          "hint": "setup + cNFT mint + demo"
+        },
+        "cpi": {
+          "label": "Cost per interaction",
+          "value": "~$0.00x",
+          "hint": "compressed via Bubblegum"
+        },
+        "depl": {
+          "label": "Deployments",
+          "value": "Multi-env",
+          "hint": "staging + prod, observability"
+        }
+      },
+      "architecture": {
+        "title": "Architecture",
+        "onchain": "On-chain state with PDA, CPI to SPL/Token-2022, cNFT avatar (Bubblegum).",
+        "offchain": "Action orchestration via Solana Agent Kit (transfers, swaps, blinks...).",
+        "wallet": "Agent ↔ user wallet linking, access policies.",
+        "ui": "Next.js 15 (RSC), prompts, logs and monitoring.",
+        "security": "Spend policies, whitelists, fee limits, signed logging."
+      },
+      "features": {
+        "title": "Features",
+        "cnft": "cNFT mint with agent traits.",
+        "fuel": "Fuel counter + upgrades (capabilities).",
+        "actions": "Agentic flows (swap, transfers...).",
+        "dashboard": "Dashboard: interactions, costs, states."
+      }
     }
   }
 }

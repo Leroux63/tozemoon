@@ -1,3 +1,4 @@
+// components/PageLayout.tsx
 import {useTranslations} from 'next-intl';
 import {ReactNode} from 'react';
 import ExternalLink from './ExternalLink';
@@ -5,9 +6,10 @@ import ExternalLink from './ExternalLink';
 type Props = {
   children?: ReactNode;
   title?: ReactNode;
+  showLinks?: boolean;
 };
 
-export default function PageLayout({children, title}: Props) {
+export default function PageLayout({children, title, showLinks = false}: Props) {
   const t = useTranslations('PageLayout');
 
   return (
@@ -15,11 +17,32 @@ export default function PageLayout({children, title}: Props) {
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute left-0 top-1 size-[20500px] translate-x-[-47.5%] rounded-full bg-gradient-to-b from-slate-900 via-cyan-500" />
       </div>
+
       <div className="container relative flex grow flex-col px-4">
-        <h1 className="text-3xl font-semibold leading-tight tracking-tight text-white md:text-5xl">
-          {title}
-        </h1>
+        {/* n'affiche le titre que s'il existe */}
+        {title ? (
+          <h1 className="text-3xl font-semibold leading-tight tracking-tight text-white md:text-5xl">
+            {title}
+          </h1>
+        ) : null}
+
         <div className="mt-6 text-gray-400 md:text-lg">{children}</div>
+
+        {/* liens optionnels en bas */}
+        {showLinks && (
+          <div className="mt-auto grid grid-cols-1 gap-4 pt-20 md:grid-cols-2 lg:gap-12">
+            <ExternalLink
+              description={t('links.docs.description')}
+              href={t('links.docs.href')}
+              title={t('links.docs.title')}
+            />
+            <ExternalLink
+              description={t('links.source.description')}
+              href={t('links.source.href')}
+              title={t('links.source.title')}
+            />
+          </div>
+        )}
       </div>
     </div>
   );

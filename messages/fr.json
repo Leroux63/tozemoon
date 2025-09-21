@@ -15,6 +15,9 @@
     "home": "Accueil",
     "pathnames": "Pathnames"
   },
+  "Common": {
+    "backHome": "Retour à l’accueil"
+  },
   "PageLayout": {
     "links": {
       "docs": {
@@ -43,6 +46,37 @@
     "badge1": "Livrables testés & documentés",
     "badge2": "Design system réutilisable",
     "available": "Disponible pour missions"
+  },
+  "Hero3D": {
+    "play": "Lire",
+    "pause": "Pause",
+    "steps": {
+      "plan": {
+        "chip": "Plan",
+        "title": "Plans & cadrage",
+        "desc": "Périmètre, KPIs, risques — on pose le plan de vol."
+      },
+      "build": {
+        "chip": "Build",
+        "title": "Construction",
+        "desc": "Smart contracts / backend / UI — les modules prennent forme."
+      },
+      "stack": {
+        "chip": "Stack",
+        "title": "Intégration",
+        "desc": "Tests, sécurité, observabilité — prêt sur pas de tir."
+      },
+      "launch": {
+        "chip": "Go",
+        "title": "Décollage",
+        "desc": "Mise en prod, déploiement progressif, télémétrie activée."
+      },
+      "orbit": {
+        "chip": "Orbit",
+        "title": "To the Moon",
+        "desc": "Scale, coûts maîtrisés, features — trajectoire stable."
+      }
+    }
   },
   "Services": {
     "kicker": "Ce que je fais",
@@ -75,6 +109,12 @@
   "Projects": {
     "kicker": "Portfolio",
     "title": "Projets phares",
+    "card": {
+      "case": "Cas d’étude",
+      "live": "Voir en ligne",
+      "caseAria": "Ouvrir le cas d’étude : {name}",
+      "liveAria": "Ouvrir le site en ligne pour {name}"
+    },
     "aivy": {
       "summary": "Agents IA évolutifs sur Solana — cNFTs, Token-2022, Solana Agent Kit. Fuel intégré, transactions unifiées."
     },
@@ -110,7 +150,60 @@
       "email": "Email",
       "message": "Votre besoin en quelques lignes",
       "submit": "Envoyer",
-      "note": "Vos données ne sont utilisées que pour vous répondre."
+      "note": "Vos données ne sont utilisées que pour vous répondre.",
+      "sending": "Envoi…",
+      "toast": {
+        "success": "Message envoyé. Merci !",
+        "captcha": "Veuillez compléter le CAPTCHA.",
+        "email": "Adresse email invalide.",
+        "required": "Veuillez remplir tous les champs.",
+        "network": "Erreur réseau. Réessayez.",
+        "generic": "Envoi impossible pour le moment."
+      }
+    }
+  },
+  "Cases": {
+    "Aivy": {
+      "title": "Aivy — Agents IA évolutifs sur Solana",
+      "intro": "Agents IA personnifiés (cNFT) avec fuel, upgrades et intégration Solana Agent Kit.",
+      "cta": "Parler de votre cas d’usage",
+      "gallery": {
+        "cover": "Aperçu Aivy",
+        "deploy": "Déploiement de la collection cNFT",
+        "solscan": "Confirmation sur Solscan"
+      },
+      "stats": {
+        "ttf": {
+          "label": "Time-to-first-value",
+          "value": "≤ 1 jour",
+          "hint": "setup + mint cNFT + démo"
+        },
+        "cpi": {
+          "label": "Coût par interaction",
+          "value": "≈ $0,00x",
+          "hint": "compressé via Bubblegum"
+        },
+        "depl": {
+          "label": "Déploiements",
+          "value": "Multi-env",
+          "hint": "préprod + prod, observabilité"
+        }
+      },
+      "architecture": {
+        "title": "Architecture",
+        "onchain": "État on-chain via PDA, CPI vers SPL/Token-2022, avatar cNFT (Bubblegum).",
+        "offchain": "Orchestration d’actions via Solana Agent Kit (transferts, swaps, blinks…).",
+        "wallet": "Liaison agent ↔ wallet utilisateur, politiques d’accès.",
+        "ui": "Next.js 15 (RSC), prompts, logs & monitoring.",
+        "security": "Politiques de dépenses, whitelists, limites de frais, logs signés."
+      },
+      "features": {
+        "title": "Fonctionnalités",
+        "cnft": "Mint cNFT (avatar) + traits d’agent.",
+        "fuel": "Fuel consommable & upgrades (capacités).",
+        "actions": "Flows agentiques (swap, transferts…).",
+        "dashboard": "Dashboard : interactions, coûts, états."
+      }
     }
   }
 }
