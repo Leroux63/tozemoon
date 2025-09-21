@@ -9,14 +9,14 @@ import { web2Skills, web3Skills } from '@/lib/skills';
 import PageLayout from '@/components/PageLayout';
 import { LIVE_URLS } from '@/lib/links';
 import ContactForm from '@/components/ContactForm';
-import dynamic from 'next/dynamic';
 import type { Locale } from 'next-intl';
 import { setRequestLocale, getTranslations } from 'next-intl/server';
 import Hero3DClient from '@/components/hero/Hero3DClient';
-type Props = { params: Promise<{ locale: Locale }> };
+
+type Props = { params: { locale: Locale } };
 
 export default async function IndexPage({ params }: Props) {
-  const { locale } = await params;
+  const { locale } = params;
   setRequestLocale(locale);
 
   const t = await getTranslations();
@@ -122,21 +122,24 @@ export default async function IndexPage({ params }: Props) {
               <ProjectCard
                 name="Aivy (Web3)"
                 summary={t('Projects.aivy.summary')}
-                tags={['Solana', 'Anchor', 'Agent Kit']}
+                tags={['Solana', 'Anchor', 'Solana Agent Kit', 'OpenAI']}
                 slug="aivy"
                 hrefLive={LIVE_URLS.aivy}
               />
+
               <ProjectCard
                 name="MetaFlow (Web3)"
                 summary={t('Projects.metaflow.summary')}
-                tags={['Token', 'Paywalls', 'USDC']}
+                tags={['USDC (SPL)', 'Subscriptions', 'PPV/Live']}
                 slug="metaflow"
               />
+
               <ProjectCard
                 name="SunSaver (Web2)"
                 summary={t('Projects.sunsaver.summary')}
-                tags={['Next.js', 'Prisma', 'Stripe/Pay']}
+                tags={['Java', 'JEE', 'Paypal']}
                 slug="sunsaver"
+                hrefLive={LIVE_URLS.sunsaver}
               />
             </div>
             <p className="mt-6 text-sm opacity-75">{t('Projects.note')}</p>
@@ -182,7 +185,6 @@ export default async function IndexPage({ params }: Props) {
             </div>
           </Section>
         </Container>
-
       </div>
     </PageLayout>
   );

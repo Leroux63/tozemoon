@@ -1,5 +1,5 @@
 export const LIVE_URLS = {
-  aivy: "https://aivybot.com",           // ✔️ remets l’URL exacte si différente
-  metaflow: "",                          // ➜ ajoute l’URL si publique
-  sunsaver: "",                          // ➜ ajoute l’URL live SunSaver
+  aivy: "https://aivybot.com",
+  metaflow: "",
+  sunsaver: "https://sunsaver.xyz",
 };

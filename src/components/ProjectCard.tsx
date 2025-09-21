@@ -3,9 +3,8 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { useTranslations } from 'next-intl';
-import { Link } from '@/i18n/navigation'; // garde la locale pour les routes internes
+import { Link } from '@/i18n/navigation';
 
-// ✅ slugs des projets (ajoute-en au besoin)
 export type ProjectSlug = 'aivy' | 'metaflow' | 'sunsaver';
 
 export function ProjectCard({
@@ -18,8 +17,8 @@ export function ProjectCard({
   name: string;
   summary: string;
   tags: string[];
-  slug: ProjectSlug;   // ⬅️ on passe un slug, pas une URL
-  hrefLive?: string;   // ex: "https://aivybot.com"
+  slug: ProjectSlug;
+  hrefLive?: string;
 }) {
   const t = useTranslations('Projects.card');
 
@@ -41,7 +40,6 @@ export function ProjectCard({
       </div>
 
       <div className="flex gap-3 mt-auto">
-        {/* Cas d’étude (interne, locale préservée) */}
         <Button className="rounded-xl" asChild>
           <Link
             href={{ pathname: '/projects/[slug]', params: { slug } }}
@@ -50,8 +48,6 @@ export function ProjectCard({
             {t('case')}
           </Link>
         </Button>
-
-        {/* Live (externe) */}
         {hrefLive && (
           <Button className="rounded-xl" variant="outline" asChild>
             <a

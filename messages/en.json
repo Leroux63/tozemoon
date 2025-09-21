@@ -47,15 +47,35 @@
     "badge2": "Reusable design system",
     "available": "Available for hire"
   },
-   "Hero3D": {
+  "Hero3D": {
     "play": "Play",
     "pause": "Pause",
     "steps": {
-      "plan":  { "chip": "Plan",  "title": "Blueprints", "desc": "Scope, KPIs, risks — we draft the flight plan." },
-      "build": { "chip": "Build", "title": "Construction", "desc": "Smart contracts / backend / UI — components take shape." },
-      "stack": { "chip": "Stack", "title": "Integration", "desc": "Testing, security checks, observability — ready on the pad." },
-      "launch":{ "chip": "Launch","title": "Liftoff", "desc": "Go-live, progressive rollout, telemetry on." },
-      "orbit": { "chip": "Orbit", "title": "To the Moon", "desc": "Scale, optimize costs, add modules — steady trajectory." }
+      "plan": {
+        "chip": "Plan",
+        "title": "Blueprints",
+        "desc": "Scope, KPIs, risks — we draft the flight plan."
+      },
+      "build": {
+        "chip": "Build",
+        "title": "Construction",
+        "desc": "Smart contracts / backend / UI — components take shape."
+      },
+      "stack": {
+        "chip": "Stack",
+        "title": "Integration",
+        "desc": "Testing, security checks, observability — ready on the pad."
+      },
+      "launch": {
+        "chip": "Launch",
+        "title": "Liftoff",
+        "desc": "Go-live, progressive rollout, telemetry on."
+      },
+      "orbit": {
+        "chip": "Orbit",
+        "title": "To the Moon",
+        "desc": "Scale, optimize costs, add modules — steady trajectory."
+      }
     }
   },
   "Services": {
@@ -99,7 +119,7 @@
       "summary": "Scalable AI agents on Solana — cNFTs, Token-2022, Solana Agent Kit. Built-in fuel, unified tx."
     },
     "metaflow": {
-      "summary": "On-chain subscriptions & paid content. Access, expirations, dynamic commissions — USDC SPL."
+      "summary": "On-chain subscriptions, Pay-Per-View and live access for creators. Access & expirations enforced on-chain, dynamic commission splits. All payments in USDC (SPL) on Solana."
     },
     "sunsaver": {
       "summary": "Private beach spot booking in Italy — real-time planning, payments and confirmations."
@@ -183,6 +203,49 @@
         "fuel": "Fuel counter + upgrades (capabilities).",
         "actions": "Agentic flows (swap, transfers...).",
         "dashboard": "Dashboard: interactions, costs, states."
+      }
+    },
+   "MetaFlow": {
+      "title": "MetaFlow — On-chain subscriptions, PPV & live (USDC on Solana)",
+      "intro": "Creators sell memberships, one-off PPV and live tickets. Payments use USDC (SPL). Content is stored/deployed via Helia (IPFS) for decentralization, and lives run on Livepeer. Access and expirations are enforced on-chain with dynamic commission splits (creator/platform/partners).",
+      "cta": "Discuss your use case",
+      "gallery": {
+        "cover": "MetaFlow overview",
+        "creator": "Creator onboarding & creation form",
+        "unlocked": "Example of unlocked content after on-chain check"
+      },
+      "stats": {
+        "ttf": { "label": "Time-to-first-value", "value": "≤ 1 day", "hint": "USDC checkout + on-chain gating" },
+        "fees": { "label": "Fees", "value": "Ultra-low", "hint": "Solana + SPL USDC" },
+        "split": { "label": "Commission split", "value": "Dynamic", "hint": "Creator / Platform / Affiliates" }
+      }
+    },
+    "SunSaver": {
+      "title": "SunSaver — Private beach spot reservation in Italy",
+      "intro": "SunSaver lets users book one or multiple spots on private beaches in Italy. Each spot includes a parasol by default; managers can configure equipment options like single sunbed, double sunbeds, or a director’s chair. Admins create beaches, managers add concessions and inventory, and users reserve for chosen dates and durations. Payments are simulated via PayPal Developer (sandbox). The project started with Jakarta EE and later migrated to Spring Boot with Thymeleaf.",
+      "cta": "Discuss your needs",
+      "gallery": {
+        "cover": "SunSaver overview",
+        "beach": "Beach detail page",
+        "concession": "Concession detail & equipment",
+        "booking": "Reservation flow & confirmation"
+      },
+      "stats": {
+        "mvp": {
+          "label": "MVP",
+          "value": "Production-ready",
+          "hint": "Admin/Manager/User roles, end-to-end booking"
+        },
+        "booking": {
+          "label": "Booking flow",
+          "value": "Multi-spot",
+          "hint": "Dates, duration, parasol included + equipment options"
+        },
+        "payment": {
+          "label": "Payment",
+          "value": "PayPal sandbox",
+          "hint": "Developer checkout for realistic testing"
+        }
       }
     }
   }

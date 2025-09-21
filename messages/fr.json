@@ -40,7 +40,7 @@
       "part3": "& des interfaces qui",
       "part4": "convertissent"
     },
-    "subtitle": "Je conçois, développe et déploie des applications ambitieuses — de la dApp Solana aux plateformes Web2 scalables. Objectif : impact business mesurable, time-to-market court, qualité premium.",
+    "subtitle": "Je conçois, développe et déploie des applications ambitieuses, de la dApp Solana aux plateformes Web2 scalables. Objectif : impact business mesurable, time-to-market court, qualité premium.",
     "cta1": "Discuter d’une mission",
     "cta2": "Voir mes projets",
     "badge1": "Livrables testés & documentés",
@@ -119,7 +119,7 @@
       "summary": "Agents IA évolutifs sur Solana — cNFTs, Token-2022, Solana Agent Kit. Fuel intégré, transactions unifiées."
     },
     "metaflow": {
-      "summary": "Abonnements & contenus payants on-chain. Accès, expirations, commissions dynamiques — USDC SPL."
+      "summary": "Abonnements on-chain, contenus à l’acte (PPV) et accès live pour créateurs. Accès & expirations vérifiés on-chain, commissions dynamiques. Tous les paiements en USDC (SPL) sur Solana."
     },
     "sunsaver": {
       "summary": "Réservation d’emplacements sur plages privées en Italie — planning temps réel, paiement et confirmation."
@@ -129,7 +129,7 @@
   "About": {
     "kicker": "Qui intervient",
     "title": "À propos",
-    "p1": "ToZeMoon Labs est mon studio — j’interviens personnellement sur l’architecture, le développement et la qualité.",
+    "p1": "ToZeMoon Labs est mon studio, j’interviens personnellement sur l’architecture, le développement et la qualité.",
     "p2": "J’accompagne de la phase de cadrage jusqu’au déploiement, avec des itérations rapides et des livrables testés.",
     "modes": {
       "title": "Mode d’engagement",
@@ -203,6 +203,61 @@
         "fuel": "Fuel consommable & upgrades (capacités).",
         "actions": "Flows agentiques (swap, transferts…).",
         "dashboard": "Dashboard : interactions, coûts, états."
+      }
+    },
+    "MetaFlow": {
+      "title": "MetaFlow — Abonnements, PPV & live on-chain (USDC sur Solana)",
+      "intro": "Les créateurs vendent des abonnements, du PPV et des billets live. Les paiements utilisent l’USDC (SPL). Le contenu est stocké/diffusé via Helia (IPFS) pour la décentralisation, et les lives s’appuient sur Livepeer. L’accès et les expirations sont vérifiés on-chain avec des commissions dynamiques (créateur/plateforme/partenaires).",
+      "cta": "Parler de votre cas d’usage",
+      "gallery": {
+        "cover": "Aperçu MetaFlow",
+        "creator": "Formulaire d’onboarding et création de créateur",
+        "unlocked": "Exemple de contenu débloqué après vérification on-chain"
+      },
+      "stats": {
+        "ttf": {
+          "label": "Time-to-first-value",
+          "value": "≤ 1 jour",
+          "hint": "Checkout USDC + gating on-chain"
+        },
+        "fees": {
+          "label": "Frais",
+          "value": "Très faibles",
+          "hint": "Solana + USDC SPL"
+        },
+        "split": {
+          "label": "Split de commissions",
+          "value": "Dynamique",
+          "hint": "Créateur / Plateforme / Affiliés"
+        }
+      }
+    },
+    "SunSaver": {
+      "title": "SunSaver — Réservation d’emplacements sur plages privées en Italie",
+      "intro": "SunSaver permet de réserver un ou plusieurs emplacements sur des plages privées en Italie. Chaque emplacement inclut un parasol par défaut ; les managers configurent des options d’équipements comme un transat, deux transats ou une chaise de réalisateur. Les admins créent les plages, les managers ajoutent les concessions et le stock, et les utilisateurs réservent pour des dates et durées choisies. Les paiements sont simulés via PayPal Developer (sandbox). Le projet a démarré en Jakarta EE puis a migré vers Spring Boot avec Thymeleaf.",
+      "cta": "Parler de votre besoin",
+      "gallery": {
+        "cover": "Aperçu SunSaver",
+        "beach": "Détail d’une plage",
+        "concession": "Détail d’une concession & équipements",
+        "booking": "Flux de réservation & confirmation"
+      },
+      "stats": {
+        "mvp": {
+          "label": "MVP",
+          "value": "Prêt prod",
+          "hint": "Rôles Admin/Manager/User, parcours de réservation de bout en bout"
+        },
+        "booking": {
+          "label": "Réservation",
+          "value": "Multi-emplacements",
+          "hint": "Dates, durée, parasol inclus + options d’équipements"
+        },
+        "payment": {
+          "label": "Paiement",
+          "value": "PayPal sandbox",
+          "hint": "Checkout développeur pour tests réalistes"
+        }
       }
     }
   }
