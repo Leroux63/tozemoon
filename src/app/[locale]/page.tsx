@@ -1,4 +1,4 @@
-// app/[locale]/page.tsx
+// src/app/[locale]/page.tsx
 import { ArrowRight, Blocks, Code2, Wrench } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Container } from '@/components/Container';
@@ -9,16 +9,29 @@ import { web2Skills, web3Skills } from '@/lib/skills';
 import PageLayout from '@/components/PageLayout';
 import { LIVE_URLS } from '@/lib/links';
 import ContactForm from '@/components/ContactForm';
-import type { Locale } from 'next-intl';
 import { setRequestLocale, getTranslations } from 'next-intl/server';
 import Hero3DClient from '@/components/hero/Hero3DClient';
+import { routing, type AppLocale } from '@/i18n/routing';
 
-type Props = { params: { locale: Locale } };
+// --- type guard
+function isAppLocale(l: string): l is AppLocale {
+  return (routing.locales as readonly string[]).includes(l);
+}
+
+type Props = { params: Promise<{ locale: string }> };
 
 export default async function IndexPage({ params }: Props) {
-  const { locale } = params;
-  setRequestLocale(locale);
+  const { locale } = await params;
 
+  if (!isAppLocale(locale)) {
+    // on peut décider de fallback sur defaultLocale si tu préfères
+    // return redirect({ href: '/', locale: routing.defaultLocale }); // si tu utilises next-intl/navigation
+    throw new Error('Unsupported locale');
+  }
+  const typed = locale as AppLocale;
+
+  setRequestLocale(typed);
+  // Après setRequestLocale, tu peux appeler sans passer locale :
   const t = await getTranslations();
 
   return (
@@ -74,18 +87,18 @@ export default async function IndexPage({ params }: Props) {
                 {
                   icon: <Blocks className="h-5 w-5" />,
                   title: t('Services.cards.web3.title'),
-                  points: [t('Services.cards.web3.p1'), t('Services.cards.web3.p2'), t('Services.cards.web3.p3')],
+                  points: [t('Services.cards.web3.p1'), t('Services.cards.web3.p2'), t('Services.cards.web3.p3')]
                 },
                 {
                   icon: <Code2 className="h-5 w-5" />,
                   title: t('Services.cards.web2.title'),
-                  points: [t('Services.cards.web2.p1'), t('Services.cards.web2.p2'), t('Services.cards.web2.p3')],
+                  points: [t('Services.cards.web2.p1'), t('Services.cards.web2.p2'), t('Services.cards.web2.p3')]
                 },
                 {
                   icon: <Wrench className="h-5 w-5" />,
                   title: t('Services.cards.ds.title'),
-                  points: [t('Services.cards.ds.p1'), t('Services.cards.ds.p2'), t('Services.cards.ds.p3')],
-                },
+                  points: [t('Services.cards.ds.p1'), t('Services.cards.ds.p2'), t('Services.cards.ds.p3')]
+                }
               ].map((s, i) => (
                 <div key={i} className="bg-white/[0.06] rounded-2xl border border-white/10">
                   <div className="p-5">
@@ -126,18 +139,16 @@ export default async function IndexPage({ params }: Props) {
                 slug="aivy"
                 hrefLive={LIVE_URLS.aivy}
               />
-
               <ProjectCard
                 name="MetaFlow (Web3)"
                 summary={t('Projects.metaflow.summary')}
                 tags={['USDC (SPL)', 'Subscriptions', 'PPV/Live']}
                 slug="metaflow"
               />
-
               <ProjectCard
                 name="SunSaver (Web2)"
                 summary={t('Projects.sunsaver.summary')}
-                tags={['Java', 'JEE', 'Paypal']}
+                tags={['Jakarta EE', 'Spring Boot', 'Thymeleaf', 'PayPal']}
                 slug="sunsaver"
                 hrefLive={LIVE_URLS.sunsaver}
               />

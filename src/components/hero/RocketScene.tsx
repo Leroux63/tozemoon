@@ -7,7 +7,6 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { easing } from 'maath';
 import RocketWithFlames from './RocketWithFlames';
 
-// --- Helpers de typage caméra (TS-safe) ---
 function asPerspective(cam: THREE.Camera): cam is THREE.PerspectiveCamera {
   return (cam as THREE.PerspectiveCamera).isPerspectiveCamera === true;
 }
@@ -15,11 +14,9 @@ function asOrtho(cam: THREE.Camera): cam is THREE.OrthographicCamera {
   return (cam as THREE.OrthographicCamera).isOrthographicCamera === true;
 }
 
-// ---------------- Durées & constantes ----------------
 const DUR = { idle: 1.2, countdown: 1.2, launch: 5.0, transfer: 7.5, capture: 2.4 } as const;
 const TOTAL_TO_ORBIT = DUR.idle + DUR.countdown + DUR.launch + DUR.transfer + DUR.capture;
 
-// Terre / Lune
 const EARTH_R = 50;
 const EARTH_CENTER = new THREE.Vector3(0, -EARTH_R, -260);
 const MOON_R = EARTH_R * 0.273;
@@ -28,29 +25,17 @@ const MOON_POS = new THREE.Vector3(0, 0, -MOON_DIST);
 const ORBIT_R = MOON_R * 1.4;
 const ORBIT_OMEGA = 0.45;
 
-// Site de lancement
 const LAUNCH_LAT = 28.60839;
 const LAUNCH_LON = -80.60433;
 
-// --------- Camera rig ----------
 const CAM_OFFSET_CLOSE = new THREE.Vector3(1.2, 0.9, 1.5);
 const CAM_OFFSET_FAR = new THREE.Vector3(0.6, 0.4, 0.8);
 const FAR_THRESHOLD = 400;
 const CAM_DAMP = 0.25;
-const TARGET_DAMP = 0.2;
 
-// Auto-zoom
-const ZOOM = {
-  desiredScreenHeight: 220,
-  minFov: 32,
-  maxFov: 58,
-  lerp: 0.08,
-};
-
-// Sommet de la montée
+const ZOOM = { desiredScreenHeight: 220, minFov: 32, maxFov: 58, lerp: 0.08 };
 const LAUNCH_APOGEE = 8.5;
 
-// ---------------- Utils ----------------
 type Phase = 'idle' | 'countdown' | 'launch' | 'transfer' | 'capture' | 'orbit';
 const d2r = (d: number) => (d * Math.PI) / 180;
 const smooth01 = (t: number) => THREE.MathUtils.smootherstep(t, 0, 1);
@@ -66,6 +51,7 @@ function latLonToCartesian(R: number, latDeg: number, lonDeg: number, center: TH
   const normal = new THREE.Vector3(x, y, z).normalize();
   return { position: p, normal };
 }
+
 function keepCameraAboveEarth(
   camPos: THREE.Vector3,
   margin: number,
@@ -97,11 +83,7 @@ function avoidEarthOcclusion(
 
   if (dist < earthR + safety) {
     const sign = Math.sign(rocketPos.clone().sub(earthCenter).dot(CAM_OFFSET_CLOSE)) || 1;
-    const away = rocketPos
-      .clone()
-      .sub(earthCenter)
-      .normalize()
-      .multiplyScalar(1.2);
+    const away = rocketPos.clone().sub(earthCenter).normalize().multiplyScalar(1.2);
     const corrected = rocketPos.clone().add(CAM_OFFSET_CLOSE.clone().multiplyScalar(sign)).add(away);
     camPos.copy(corrected);
   }
@@ -110,6 +92,7 @@ function avoidEarthOcclusion(
 
 export default function RocketScene() {
   const { camera, gl, size } = useThree();
+
   const rocket = useRef<THREE.Group>(null!);
   const moon = useRef<THREE.Mesh>(null!);
   const earth = useRef<THREE.Mesh>(null!);
@@ -117,8 +100,9 @@ export default function RocketScene() {
   const [moonColor, moonDisp] = useTexture([
     '/textures/moon/lroc_color_poles_1k.jpg',
     '/textures/moon/ldem_3_8bit.jpg',
-  ]);
-  const [earthColor] = useTexture(['/textures/earth/earth_day_2k.jpg']);
+  ]) as [THREE.Texture, THREE.Texture];
+
+  const [earthColor] = useTexture(['/textures/earth/earth_day_2k.jpg']) as [THREE.Texture];
 
   useEffect(() => {
     gl.localClippingEnabled = true;
@@ -128,12 +112,12 @@ export default function RocketScene() {
   }, [camera, gl]);
 
   const site = useMemo(() => latLonToCartesian(EARTH_R, LAUNCH_LAT, LAUNCH_LON, EARTH_CENTER), []);
-  const rocketUp = new THREE.Vector3(0, 1, 0);
   const rocketQuat = useMemo(() => {
     const q = new THREE.Quaternion();
-    q.setFromUnitVectors(rocketUp, site.normal.clone());
+    q.setFromUnitVectors(new THREE.Vector3(0, 1, 0), site.normal.clone());
     return q;
   }, [site.normal]);
+
   const clipPlane = useMemo(() => {
     const n = site.normal.clone().normalize();
     const d = -n.dot(site.position);
@@ -167,6 +151,9 @@ export default function RocketScene() {
     }
   }, [camera, site.position, site.normal]);
 
+  const phaseRef = useRef<Phase>('idle');
+  const phaseProgressRef = useRef(0);
+
   const rocketBounds = useRef<{ sphere: THREE.Sphere | null }>({ sphere: null });
   useEffect(() => {
     const id = setInterval(() => {
@@ -179,6 +166,7 @@ export default function RocketScene() {
     }, 100);
     return () => clearInterval(id);
   }, []);
+
   function adjustFovForRocketSize() {
     if (!rocketBounds.current.sphere) return;
     if (!asPerspective(camera)) return;
@@ -221,6 +209,7 @@ export default function RocketScene() {
 
     let phase: Phase = 'orbit';
     let phaseProgress = 0;
+
     if (!lockedOrbit) {
       if (t < idleEnd) {
         phase = 'idle'; phaseProgress = t / DUR.idle;
@@ -295,12 +284,13 @@ export default function RocketScene() {
 
     if (Math.abs(thrust - thrustTarget) > 0.01) setThrust(thrustTarget);
     adjustFovForRocketSize();
-    (RocketScene as any)._phase = phase;
-    (RocketScene as any)._phaseProgress = phaseProgress;
+
+    phaseRef.current = phase;
+    phaseProgressRef.current = phaseProgress;
   });
 
-  const phase = (RocketScene as any)._phase as Phase ?? 'idle';
-  const phaseProgress = (RocketScene as any)._phaseProgress as number ?? 0;
+  const phase = phaseRef.current;
+  const phaseProgress = phaseProgressRef.current;
   const showMoon = phase === 'transfer' || phase === 'capture' || phase === 'orbit';
 
   return (
@@ -313,17 +303,17 @@ export default function RocketScene() {
 
       <mesh ref={earth} position={EARTH_CENTER.toArray()}>
         <sphereGeometry args={[EARTH_R, 256, 256]} />
-        <meshStandardMaterial map={earthColor as any} metalness={0} roughness={1} />
+        <meshStandardMaterial map={earthColor} metalness={0} roughness={1} />
       </mesh>
 
       {showMoon && (
         <mesh ref={moon} position={MOON_POS.toArray()} scale={[1, 1, 1]}>
           <sphereGeometry args={[MOON_R, 256, 256]} />
           <meshStandardMaterial
-            map={moonColor as any}
-            displacementMap={moonDisp as any}
+            map={moonColor}
+            displacementMap={moonDisp}
             displacementScale={MOON_R * 0.02}
-            bumpMap={moonDisp as any}
+            bumpMap={moonDisp}
             bumpScale={MOON_R * 0.01}
             roughness={1}
             metalness={0}
